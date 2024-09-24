@@ -14,7 +14,7 @@ For testing the RGB SOD task, we use **DUTS**, **ECSSD**, **HKU-IS**, **PASCAL-S
 ## Experiments
 Run `python train_test_eval.py --Training True --Testing True --Evaluation True` for training, testing, and evaluation which is similar to VST.
 
-## 🎃 Results
+## Results
 
 ### 1. Model Zoo
 | Name | Backbone | RGB Weight | RGB-D Weight | 

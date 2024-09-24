@@ -3,6 +3,7 @@ This is an official implementation for “VST++: Efficient and Stronger Visual S
 
 Nian Liu, Ziyang Luo, Ni Zhang, Junwei Han
 
+⁉️ **Here is just an initial version, and I haven't spent much time organizing the code since it's quite old. If you find any issues, please let me know, and I'll make the necessary adjustments promptly.**
 
 ## Environmental Setups
 Pytorch $\geq$ 1.6.0, Torchvision $\geq$ 0.7.0

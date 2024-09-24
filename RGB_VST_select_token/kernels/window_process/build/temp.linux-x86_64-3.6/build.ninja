@@ -1,0 +1,27 @@
+ninja_required_version = 1.3
+cxx = c++
+nvcc = /usr/local/cuda/bin/nvcc
+
+cflags = -pthread -B /home/luoziyang/anaconda3/envs/myenv/compiler_compat -Wl,--sysroot=/ -Wsign-compare -DNDEBUG -g -fwrapv -O3 -Wall -Wstrict-prototypes -fPIC -I/home/luoziyang/anaconda3/envs/myenv/lib/python3.6/site-packages/torch/include -I/home/luoziyang/anaconda3/envs/myenv/lib/python3.6/site-packages/torch/include/torch/csrc/api/include -I/home/luoziyang/anaconda3/envs/myenv/lib/python3.6/site-packages/torch/include/TH -I/home/luoziyang/anaconda3/envs/myenv/lib/python3.6/site-packages/torch/include/THC -I/usr/local/cuda/include -I/home/luoziyang/anaconda3/envs/myenv/include/python3.6m -c
+post_cflags = -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=swin_window_process -D_GLIBCXX_USE_CXX11_ABI=0 -std=c++14
+cuda_cflags = -I/home/luoziyang/anaconda3/envs/myenv/lib/python3.6/site-packages/torch/include -I/home/luoziyang/anaconda3/envs/myenv/lib/python3.6/site-packages/torch/include/torch/csrc/api/include -I/home/luoziyang/anaconda3/envs/myenv/lib/python3.6/site-packages/torch/include/TH -I/home/luoziyang/anaconda3/envs/myenv/lib/python3.6/site-packages/torch/include/THC -I/usr/local/cuda/include -I/home/luoziyang/anaconda3/envs/myenv/include/python3.6m -c
+cuda_post_cflags = -D__CUDA_NO_HALF_OPERATORS__ -D__CUDA_NO_HALF_CONVERSIONS__ -D__CUDA_NO_HALF2_OPERATORS__ --expt-relaxed-constexpr --compiler-options ''"'"'-fPIC'"'"'' -DTORCH_API_INCLUDE_EXTENSION_H -DTORCH_EXTENSION_NAME=swin_window_process -D_GLIBCXX_USE_CXX11_ABI=0 -gencode=arch=compute_61,code=sm_61 -std=c++14
+ldflags = 
+
+rule compile
+  command = $cxx -MMD -MF $out.d $cflags -c $in -o $out $post_cflags
+  depfile = $out.d
+  deps = gcc
+
+rule cuda_compile
+  command = $nvcc $cuda_cflags -c $in -o $out $cuda_post_cflags
+
+
+
+build /data3/lzy/VST/new_RGB_VST/swinT_iouloss+decoderPEmask_getbackgroundtoken/kernels/window_process/build/temp.linux-x86_64-3.6/swin_window_process.o: compile /data3/lzy/VST/new_RGB_VST/swinT_iouloss+decoderPEmask_getbackgroundtoken/kernels/window_process/swin_window_process.cpp
+build /data3/lzy/VST/new_RGB_VST/swinT_iouloss+decoderPEmask_getbackgroundtoken/kernels/window_process/build/temp.linux-x86_64-3.6/swin_window_process_kernel.o: cuda_compile /data3/lzy/VST/new_RGB_VST/swinT_iouloss+decoderPEmask_getbackgroundtoken/kernels/window_process/swin_window_process_kernel.cu
+
+
+
+
+
